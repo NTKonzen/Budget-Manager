@@ -37,7 +37,14 @@ function getData() {
                 "Content-Type": "application/json"
             }
         })
-            .then(response => response.json());
+            .then(response => response.json())
+            .then(() => {
+                const transaction = db.transaction(["unsaved"], "readwrite");
+
+                const unSavedStore = transaction.objectStore("unsaved");
+
+                unSavedStore.clear();
+            })
     }
 }
 
